@@ -1,0 +1,2728 @@
+# Requests
+
+This API allows you to push a money transfer request to Switchlink.
+
+There are various types of transactions:
+
+- ‘IPSL’ – Bank Transfer.
+
+- ‘B2C’  - Mobile Wallet Transfer.
+
+- ‘B2B’  - Business to Business Transfer.
+
+- ‘C2B’  - Customer to Business Transfer.
+
+- ‘CARD’ - ThreeDSecure (Also Known as “VerfifiedByVisa” OR “MasterCard Secure”).
+
+## Request information
+
+|Category|Value|
+|--------|-----|
+|Http request| `POST `|
+|URL|https://dev.slafrica.net:6500/api/v1/request |
+
+
+Banks and Branch codes are provided in the 'Bank and Branches' menu below
+
+## Ipsl Collection Process
+
+On your phone, 
+
+- Go to pesalink 
+
+- Click send to phone option
+
+- Input phone number 0790177177
+
+- Enter Amount
+
+- **On Narration field input the Merchant Code**
+
+- Clink send
+
+The collection diagram is a shown
+
+<%= image_tag "images/my-image.png" %>
+<%= image_tag "./images/pesalink_process.PNG"%>
+
+
+## Ipsl Disbursement
+
+ ```python
+ import requests
+
+url = "https://dev.slafrica.net:6500/api/v1/request"
+
+payload=" {
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY", //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "IPSL",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "", // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "receiver_mobile": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "",//Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}"
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ=='
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+ ```
+
+ ```javascript
+ var myHeaders = new Headers();
+ myHeaders.append("Content-Type", "application/json");
+ myHeaders.append("Authorization", "Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ==");
+ 
+ var raw = JSON.stringify( {
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY", //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "IPSL",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "", // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "receiver_mobile": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "",//Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+});
+ 
+ var requestOptions = {
+   method: 'POST',
+   headers: myHeaders,
+   body: raw,
+   redirect: 'follow'
+ };
+ 
+ fetch("https://dev.slafrica.net:6500/api/v1/request", requestOptions)
+   .then(response => response.text())
+   .then(result => console.log(result))
+   .catch(error => console.log('error', error));
+
+ ```
+
+ ```java
+ OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, " {
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY", //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "IPSL",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "", // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "receiver_mobile": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "",//Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}");
+Request request = new Request.Builder()
+  .url("https://dev.slafrica.net:6500/api/v1/request")
+  .method("POST", body)
+  .addHeader("Content-Type", "application/json")
+  .addHeader("Authorization", "Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ==")
+  .build();
+Response response = client.newCall(request).execute();
+
+ ```
+
+ ```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://dev.slafrica.net:6500/api/v1/request',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>' {
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY", //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "IPSL",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "", // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "receiver_mobile": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "",//Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    'Authorization: Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ=='
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+
+ ```
+ ```csharp
+var client = new RestClient("https://dev.slafrica.net:6500/api/v1/request");
+client.Timeout = -1;
+var request = new RestRequest(Method.POST);
+request.AddHeader("Content-Type", "application/json");
+request.AddHeader("Authorization", "Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ==");
+request.AddParameter("application/json", " {
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY", //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "IPSL",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "", // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "receiver_mobile": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "",//Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}",  ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+ ```
+ ```json
+ {
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY", //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "IPSL",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "", // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "receiver_mobile": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "",//Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}
+
+Sample Request
+
+{
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "111575569802",
+            "transaction_date": "00271211",
+            "collection_branch": "68",
+            "transaction_type": "IPSL",
+            "sender_type": "P",
+            "sender_full_name": "John Doe",
+            "sender_address": "14537 Yosemite Avenue",
+            "sender_city": "Savage",
+            "sender_country_code": "USA",
+            "sender_currency_code": "USD",
+            "sender_mobile": "9999999999",
+            "send_amount": "1439.73",
+            "sender_id_type": "Passport",
+            "sender_id_number": "123456789",
+            "receiver_type": "P",
+            "receiver_full_name": "Jane Doe",
+            "receiver_country_code": "KEN",
+            "receiver_currency_code": "KES",
+            "receiver_amount": "150000",
+            "receiver_city": "Nairobi",
+            "receiver_address": "08",
+            "receiver_mobile": "254720000000",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "ID",
+            "receiver_id_number": 123456,
+            "receiver_account": "111111111111",
+            "receiver_bank": "68-Equity Bank Limited",
+            "receiver_bank_code": "68",
+            "receiver_swiftcode": "68",
+            "receiver_branch": "Equity Bank",
+            "receiver_branch_code": "68",
+            "exchange_rate": "105.02",
+            "commission_amount": "11.43",
+            "remarks": "FAMILY_SUPPORT",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}
+
+SAMPLE RESPONSE
+
+{
+    "response_code": 200,
+    "resource": {
+        "date_time_added": 1618217032,
+        "added_by": 0,
+        "date_time_modified": 1618217032,
+        "modified_by": null,
+        "user_activity_log_id": null,
+        "source_ip": null,
+        "latest_ip": null,
+        "request_id": 11616,
+        "request_number": "210412000002",
+        "request_hash": "4e2bb9030a195293233ed78f27d42e4f79356281aec61769af19ba3dc8d98163d0b8f28f51df6917c671cfa563f29b7fe042784a7ab8a4061637c1b4aa1d0258",
+        "request_status": "NEW",
+        "transactions": 1,
+        "transactions_value": 1439.73,
+        "original_message": "{entries=[{partner_id=UPESIMTS, transaction_ref=111575569802, transaction_date=00271211, collection_branch=68, transaction_type=IPSL, sender_type=P, sender_full_name=John Doe, sender_address=14537 Yosemite Avenue, sender_city=Savage, sender_country_code=USA, sender_currency_code=USD, sender_mobile=9999999999, send_amount=1439.73, sender_id_type=Passport, sender_id_number=123456789, receiver_type=P, receiver_full_name=Jane Doe, receiver_country_code=KEN, receiver_currency_code=KES, receiver_amount=150000, receiver_city=Nairobi, receiver_address=08, receiver_mobile=254720000000, mobile_operator=SAFARICOM, receiver_id_type=ID, receiver_id_number=123456, receiver_account=111111111111, receiver_bank=68-Equity Bank Limited, receiver_bank_code=68, receiver_swiftcode=68, receiver_branch=Equity Bank, receiver_branch_code=68, exchange_rate=105.02, commission_amount=11.43, remarks=FAMILY_SUPPORT, callbacks=[http://callbackurl], hash=b0f9793653bcaaec5815cuud7a04369660d5d4ec}]}",
+        "record_version": 0
+    },
+    "extra_data": [
+        [
+            {
+                "date_time_added": 1618217033,
+                "added_by": 0,
+                "date_time_modified": 1618217032,
+                "modified_by": null,
+                "user_activity_log_id": null,
+                "source_ip": null,
+                "latest_ip": null,
+                "transaction_id": 11673,
+                "request_id": 11616,
+                "request_number": "210412000002",
+                "partner_id": "UPESIMTS",
+                "partner_name": "UPESIMTS",
+                "transaction_ref": "111575569802",
+                "transaction_date": "00271211",
+                "collection_branch": "68",
+                "transaction_type": "IPSL",
+                "service_type": null,
+                "sender_type": "P",
+                "sender_full_name": "John Doe",
+                "sender_address": "14537 Yosemite Avenue",
+                "sender_city": "Savage",
+                "sender_country_code": "USA",
+                "sender_currency_code": "USD",
+                "sender_mobile": "9999999999",
+                "send_amount": 1439.73,
+                "sender_id_type": "Passport",
+                "sender_id_number": "123456789",
+                "receiver_type": "P",
+                "receiver_full_name": "Jane Doe",
+                "receiver_country_code": "KEN",
+                "receiver_currency_code": "KES",
+                "receiver_amount": 150000,
+                "receiver_city": "Nairobi",
+                "receiver_address": "08",
+                "receiver_mobile": "254720000000",
+                "mobile_operator": "SAFARICOM",
+                "receiver_id_type": "National ID",
+                "receiver_id_number": "123456",
+                "receiver_account": "111111111111",
+                "receiver_bank": "EQUITY BANK LIMITED",
+                "receiver_bank_code": "40468000",
+                "receiver_swiftcode": "EQBLKENA",
+                "receiver_branch": "81",
+                "receiver_branch_code": "81",
+                "exchange_rate": 105.02,
+                "commission_amount": 11.43,
+                "remarks": "FAMILY_SUPPORT",
+                "transaction_number": "210412000002",
+                "transaction_hash": "5b534355110ce7649c457236bd5832ae0e4c5961ea4fbe2ab5429aabaace03cbd849135c7f730b503d145752a0a40444241e134ccc0ac5b5d9b502bf76a7302b",
+                "transaction_status": "NEW",
+                "transaction_response": null,
+                "switch_response": null,
+                "query_status": null,
+                "query_response": null,
+                "callbacks": "[\"http://callbackurl\"]",
+                "callbacks_status": null,
+                "queued_callbacks": 1,
+                "completed_callbacks": 0,
+                "callback_status": 0,
+                "record_version": 0,
+                "need_syncing": true,
+                "synced": false,
+                "sent": false,
+                "incident_code": null,
+                "incident_description": null,
+                "incident_note": null,
+                "payment_mode_id": null,
+                "payment_mode_name": null,
+                "channel": null,
+                "partner_process": null,
+                "partner_status": null,
+                "partner_status_name": null,
+                "receiver_dob": null,
+                "receiver_gender": null,
+                "receiver_city_id": null,
+                "receiver_form_of_payment": null,
+                "receiver_proof_of_address_collected": false,
+                "receiver_kyc_verified": false,
+                "partner_message": null,
+                "sender_dob": null,
+                "receiver_state_id": null,
+                "source_account": null,
+                "receiver_id_expiration_date": null,
+                "receiver_id_date_of_issue": null,
+                "sender_first_name": null,
+                "sender_last_name": null,
+                "sender_middle_name": null,
+                "sender_fourth_name": null,
+                "receiver_first_name": null,
+                "receiver_middle_name": null,
+                "receiver_last_name": null,
+                "receiver_fourth_name": null,
+                "receiver_nationality": null,
+                "receiver_id_place_of_issue": null,
+                "receiver_id_expiry_date": null,
+                "paid_branch_code": null,
+                "document_image": null,
+                "receiver_occupation": null,
+                "sender_relation_with_receiver": null,
+                "pan": null,
+                "expiry_date": null,
+                "card_security_code": null,
+                "acs_url": null,
+                "pa_rec": null,
+                "deleted_at": null,
+                "updated_at": null,
+                "three_dsecure_signedpares": null,
+                "three_dsecure_acsurl": null,
+                "three_dsecure_requestid": null,
+                "payment_ref": null,
+                "bank_code": "68",
+                "queried": false
+            }
+        ]
+    ]
+} 
+ ```
+ 
+
+ 
+### Request information
+|Field | Mandatory | Format | Description
+|------ | ------ | ------ | ------
+|partner_id | Y | an15 | Partner Identifier
+|transaction_ref | Y | an12 | Unique transaction reference from the partner
+|transaction_date | Y | n8 | Transaction date(DDMMYY)
+|collection_branch | Y | an8 | Y – If transaction_type mode is B O – If transaction_type Mode is M,C
+|transaction_type | Y | a1 | B – Bank Transfer M – Mobile Wallet C – Cash Payment U – Utility Bill Payments
+|sender_type | Y | an1 | P – Person B – Business
+|sender_full_name | Y | an100 | Sender full names
+|sender_address | Y | an50 | Sender Address
+|sender_city | Y | an15 | Sender City
+|sender_country_code | Y | a2 | Sender Country Code
+|sender_currency_code | Y | a3 | Sender Currency Code
+|sender_mobile | O | n15 | Sender Mobile
+|send_amount | Y | n12 | Sender Amount
+|sender_id_type | Y | an20 | Sender identification e.g. Passport,ID,Drivers Licence
+|sender_id_number | Y | an20 | Sender identification number
+|receiver_type | Y | an1 | P – Person B – Business
+|receiver_full_name | Y | an100 | Receiver full names
+|receiver_country_code | Y | a2 | Receiver Country Code
+|receiver_currency_code | Y | a3 | Receiver Currency Code
+|receiver_amount | Y | n12 | Receiver Amount
+|receiver_city | Y | an15 | Sender City Name
+|receiver_address | Y | an50 | Receiver Address
+|receiver_mobile | Y,O | an15 | Receiver Mobile Number Y – If Payment mode is M O – If Payment Mode is B,C
+|mobile_operator | Y,O | an15 | Mobile operator e.g SAFARICOM Y – If Payment mode is M O – If Payment Mode is B,C
+|receiver_id_type | Y | an20 | Receiver identification e.g. Passport,ID,Drivers License
+|receiver_id_number | Y | an20 | Receiver identification number
+|receiver_account | Y,0 | n15 | Receiver account number Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_bank | Y,0 | an25 | Receiver bank name Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_bank_code | Y,0 | an20 | Receiver bank Code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_branch_code | Y,0 | an20 | Receiver branch Code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_swiftcode | Y,0 | an20 | Receiver bank swift code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_branch | Y,0 | an8 | Receiver bank branch Y – If Payment mode is B O – If Payment Mode is M,C
+receiver_branch_code| Y,0 | an20 | Receiver bank Code Y – If Payment mode is B O – If Payment Mode is M,C
+|exchange_rate | 0 | n12 | Exchange rate used for the transaction
+|commission_amount | 0 | n12 | Commission amount if applicable
+|remarks | O | an25 | Remarks
+|callbacks | Y,0 | an250 | List of call back urls. It can be more than one separated by comma|
+
+## b2b
+```python
+import requests
+
+url = "https://dev.slafrica.net:6500/api/v1/request"
+
+payload="{
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY",  //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "B2B",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "",  // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "", //Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}"
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ=='
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+
+
+```
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", "Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ==");
+
+var raw = JSON.stringify({
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY",  //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "B2B",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "",  // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "", //Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://dev.slafrica.net:6500/api/v1/request", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY",  //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "B2B",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "",  // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "", //Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}");
+Request request = new Request.Builder()
+  .url("https://dev.slafrica.net:6500/api/v1/request")
+  .method("POST", body)
+  .addHeader("Content-Type", "application/json")
+  .addHeader("Authorization", "Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ==")
+  .build();
+Response response = client.newCall(request).execute();
+```
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://dev.slafrica.net:6500/api/v1/request',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY",  //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "B2B",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "",  // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "", //Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    'Authorization: Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ=='
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+```
+
+```csharp
+var client = new RestClient("https://dev.slafrica.net:6500/api/v1/request");
+client.Timeout = -1;
+var request = new RestRequest(Method.POST);
+request.AddHeader("Content-Type", "application/json");
+request.AddHeader("Authorization", "Basic VVBFU0lNVFM6V1cxR2VscFVXVEJKUjFKc1dUSTVhMXBZU1E9PQ==");
+request.AddParameter("application/json", ""{
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY",  //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "B2B",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "",  // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "", //Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+},  ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+```
+```json
+{
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "",
+            "transaction_date": "DDMMYY",  //e.g 00271211
+            "collection_branch": "",
+            "transaction_type": "B2B",
+            "sender_type": "",
+            "sender_full_name": "",
+            "sender_address": "",
+            "sender_city": "",
+            "sender_country_code": "",
+            "sender_currency_code": "",
+            "sender_mobile": "",
+            "send_amount": "",
+            "sender_id_type": "", // Passport, ID, Drivers Licence
+            "sender_id_number": "",
+            "receiver_type": "",  // P – Person B – Business
+            "receiver_full_name": "",
+            "receiver_country_code": "",
+            "receiver_currency_code": "",
+            "receiver_amount": "",
+            "receiver_city": "",
+            "receiver_address": "",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "", //Passport, ID, Drivers Licence
+            "receiver_id_number": ,
+            "receiver_account": "",
+            "receiver_bank": "",
+            "receiver_bank_code": "",
+            "receiver_swiftcode": "",
+            "receiver_branch": "",
+            "receiver_branch_code": "",
+            "exchange_rate": "",
+            "commission_amount": "",
+            "remarks": "",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}
+
+Sample Request
+
+{
+    "entries": [
+        {
+            "partner_id": "PARTNERID",
+            "transaction_ref": "10001001",
+            "transaction_date": "00271211",
+            "collection_branch": "68",
+            "transaction_type": "B2B",
+            "sender_type": "P",
+            "sender_full_name": "John Doe",
+            "sender_address": "14537 Yosemite Avenue",
+            "sender_city": "Savage",
+            "sender_country_code": "USA",
+            "sender_currency_code": "USD",
+            "sender_mobile": "9999999999",
+            "send_amount": "1439.73",
+            "sender_id_type": "Passport",
+            "sender_id_number": "123456789",
+            "receiver_type": "P",
+            "receiver_full_name": "Jane Doe",
+            "receiver_country_code": "KEN",
+            "receiver_currency_code": "KES",
+            "receiver_amount": "150000",
+            "receiver_city": "Nairobi",
+            "receiver_address": "80810",
+            "mobile_operator": "SAFARICOM",
+            "receiver_id_type": "ID",
+            "receiver_id_number": 123456,
+            "receiver_account": "111111111111",
+            "receiver_bank": "68-Equity Bank Limited",
+            "receiver_bank_code": "68",
+            "receiver_swiftcode": "68",
+            "receiver_branch": "Equity Bank",
+            "receiver_branch_code": "68",
+            "exchange_rate": "105.02",
+            "commission_amount": "11.43",
+            "remarks": "FAMILY_SUPPORT",
+            "callbacks": [
+                "http://callbackurl"
+            ],
+            "hash": "b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+        }
+    ]
+}
+
+Sample Response
+
+{
+    "response_code": 200,
+    "resource": {
+        "date_time_added": 1618227285,
+        "added_by": 0,
+        "date_time_modified": 1618227285,
+        "modified_by": null,
+        "user_activity_log_id": null,
+        "source_ip": null,
+        "latest_ip": null,
+        "request_id": 11618,
+        "request_number": "210412000004",
+        "request_hash": "d910746b78c235bffbb247f1df017f8b4ed1017c92a71693524d031c0562f437c0b0cc0bf32cb3bea246e579a23ca0cad97702ecf27743686aa92649f78a2361",
+        "request_status": "NEW",
+        "transactions": 1,
+        "transactions_value": 1439.73,
+        "original_message": "{entries=[{partner_id=UPESIMTS, transaction_ref=10001001, transaction_date=00271211, collection_branch=68, transaction_type=B2B, sender_type=P, sender_full_name=John Doe, sender_address=14537 Yosemite Avenue, sender_city=Savage, sender_country_code=USA, sender_currency_code=USD, sender_mobile=9999999999, send_amount=1439.73, sender_id_type=Passport, sender_id_number=123456789, receiver_type=P, receiver_full_name=Jane Doe, receiver_country_code=KEN, receiver_currency_code=KES, receiver_amount=150000, receiver_city=Nairobi, receiver_address=80810, mobile_operator=SAFARICOM, receiver_id_type=ID, receiver_id_number=123456, receiver_account=111111111111, receiver_bank=68-Equity Bank Limited, receiver_bank_code=68, receiver_swiftcode=68, receiver_branch=Equity Bank, receiver_branch_code=68, exchange_rate=105.02, commission_amount=11.43, remarks=FAMILY_SUPPORT, callbacks=[http://callbackurl], hash=b0f9793653bcaaec5815cuud7a04369660d5d4ec}]}",
+        "record_version": 0
+    },
+    "extra_data": [
+        [
+            {
+                "date_time_added": 1618227286,
+                "added_by": 0,
+                "date_time_modified": 1618227285,
+                "modified_by": null,
+                "user_activity_log_id": null,
+                "source_ip": null,
+                "latest_ip": null,
+                "transaction_id": 11675,
+                "request_id": 11618,
+                "request_number": "210412000004",
+                "partner_id": "PARTNERID",
+                "partner_name": "PARTNERID",
+                "transaction_ref": "10001001",
+                "transaction_date": "00271211",
+                "collection_branch": "68",
+                "transaction_type": "B2B",
+                "service_type": null,
+                "sender_type": "P",
+                "sender_full_name": "John Doe",
+                "sender_address": "14537 Yosemite Avenue",
+                "sender_city": "Savage",
+                "sender_country_code": "USA",
+                "sender_currency_code": "USD",
+                "sender_mobile": "9999999999",
+                "send_amount": 1439.73,
+                "sender_id_type": "Passport",
+                "sender_id_number": "123456789",
+                "receiver_type": "P",
+                "receiver_full_name": "Jane Doe",
+                "receiver_country_code": "KEN",
+                "receiver_currency_code": "KES",
+                "receiver_amount": 150000,
+                "receiver_city": "Nairobi",
+                "receiver_address": "80810",
+                "receiver_mobile": "N/A",
+                "mobile_operator": "SAFARICOM",
+                "receiver_id_type": "National ID",
+                "receiver_id_number": "123456",
+                "receiver_account": "111111111111",
+                "receiver_bank": "68-Equity Bank Limited",
+                "receiver_bank_code": "68",
+                "receiver_swiftcode": "68",
+                "receiver_branch": "Equity Bank",
+                "receiver_branch_code": "68",
+                "exchange_rate": 105.02,
+                "commission_amount": 11.43,
+                "remarks": "FAMILY_SUPPORT",
+                "transaction_number": "210412000004",
+                "transaction_hash": "8050c1df568071307f7ef7fdd781ddd0e8b3e096a213bb81ce81808748c79d3a068fad0783b20194888a222ef1f1bfead389c5a66754c281656c5721fb3158a6",
+                "transaction_status": "NEW",
+                "transaction_response": null,
+                "switch_response": null,
+                "query_status": null,
+                "query_response": null,
+                "callbacks": "[\"http://callbackurl\"]",
+                "callbacks_status": null,
+                "queued_callbacks": 1,
+                "completed_callbacks": 0,
+                "callback_status": 0,
+                "record_version": 0,
+                "need_syncing": true,
+                "synced": false,
+                "sent": false,
+                "incident_code": null,
+                "incident_description": null,
+                "incident_note": null,
+                "payment_mode_id": null,
+                "payment_mode_name": null,
+                "channel": null,
+                "partner_process": null,
+                "partner_status": null,
+                "partner_status_name": null,
+                "receiver_dob": null,
+                "receiver_gender": null,
+                "receiver_city_id": null,
+                "receiver_form_of_payment": null,
+                "receiver_proof_of_address_collected": false,
+                "receiver_kyc_verified": false,
+                "partner_message": null,
+                "sender_dob": null,
+                "receiver_state_id": null,
+                "source_account": null,
+                "receiver_id_expiration_date": null,
+                "receiver_id_date_of_issue": null,
+                "sender_first_name": null,
+                "sender_last_name": null,
+                "sender_middle_name": null,
+                "sender_fourth_name": null,
+                "receiver_first_name": null,
+                "receiver_middle_name": null,
+                "receiver_last_name": null,
+                "receiver_fourth_name": null,
+                "receiver_nationality": null,
+                "receiver_id_place_of_issue": null,
+                "receiver_id_expiry_date": null,
+                "paid_branch_code": null,
+                "document_image": null,
+                "receiver_occupation": null,
+                "sender_relation_with_receiver": null,
+                "pan": null,
+                "expiry_date": null,
+                "card_security_code": null,
+                "acs_url": null,
+                "pa_rec": null,
+                "deleted_at": null,
+                "updated_at": null,
+                "three_dsecure_signedpares": null,
+                "three_dsecure_acsurl": null,
+                "three_dsecure_requestid": null,
+                "payment_ref": null,
+                "bank_code": null,
+                "queried": false
+            }
+        ]
+    ]
+}
+
+```
+
+### Request information
+|Field | Mandatory | Format | Description
+|------ | ------ | ------ | ------
+|partner_id | Y | an15 | Partner Identifier
+|transaction_ref | Y | an12 | Unique transaction reference from the partner
+|transaction_date | Y | n8 | Transaction date(DDMMYY)
+|collection_branch | Y | an8 | Y – If transaction_type mode is B O – If transaction_type Mode is M,C
+|transaction_type | Y | a1 | B – Bank Transfer M – Mobile Wallet C – Cash Payment U – Utility Bill Payments
+|sender_type | Y | an1 | P – Person B – Business
+|sender_full_name | Y | an100 | Sender full names
+|sender_address | Y | an50 | Sender Address
+|sender_city | Y | an15 | Sender City
+|sender_country_code | Y | a2 | Sender Country Code
+|sender_currency_code | Y | a3 | Sender Currency Code
+|sender_mobile | O | n15 | Sender Mobile
+|send_amount | Y | n12 | Sender Amount
+|sender_id_type | Y | an20 | Sender identification e.g. Passport,ID,Drivers Licence
+|sender_id_number | Y | an20 | Sender identification number
+|receiver_type | Y | an1 | P – Person B – Business
+|receiver_full_name | Y | an100 | Receiver full names
+|receiver_country_code | Y | a2 | Receiver Country Code
+|receiver_currency_code | Y | a3 | Receiver Currency Code
+|receiver_amount | Y | n12 | Receiver Amount
+|receiver_city | Y | an15 | Sender City Name
+|receiver_address | Y | an50 | Receiver Address
+|mobile_operator | Y,O | an15 | Mobile operator e.g SAFARICOM Y – If Payment mode is M O – If Payment Mode is B,C
+|receiver_id_type | Y | an20 | Receiver identification e.g. Passport,ID,Drivers License
+|receiver_id_number | Y | an20 | Receiver identification number
+|receiver_account | Y,0 | n15 | Receiver account number Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_bank | Y,0 | an25 | Receiver bank name Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_bank_code | Y,0 | an20 | Receiver bank Code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_branch_code | Y,0 | an20 | Receiver branch Code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_swiftcode | Y,0 | an20 | Receiver bank swift code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_branch | Y,0 | an8 | Receiver bank branch Y – If Payment mode is B O – If Payment Mode is M,C
+receiver_branch_code| Y,0 | an20 | Receiver bank Code Y – If Payment mode is B O – If Payment Mode is M,C
+|exchange_rate | 0 | n12 | Exchange rate used for the transaction
+|commission_amount | 0 | n12 | Commission amount if applicable
+|remarks | O | an25 | Remarks
+|callbacks | Y,0 | an250 | List of call back urls. It can be more than one separated by comma|
+
+## b2c
+```python
+import requests
+
+url = "https://dev.slafrica.net:6500/api/v1/request"
+
+payload="{
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"",  //e.g 00271211
+          "collection_branch":"",
+          "transaction_type":"B2C",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"", // Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// P – Person B – Business
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"",//Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "receiver_account":"",
+         "receiver_bank":"",
+          "receiver_bank_code":"",
+          "receiver_swiftcode":"",
+          "receiver_branch":"",
+          "receiver_branch_code":"",
+          "exchange_rate":"",
+          "commission_amount":"",
+          "remarks":"",
+          "callbacks":["http://callbackurl"],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ecwere"
+       }
+    ]
+ }"
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ=='
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+
+```
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==");
+
+var raw = JSON.stringify({
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"",  //e.g 00271211
+          "collection_branch":"",
+          "transaction_type":"B2C",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"", // Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// P – Person B – Business
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"",//Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "receiver_account":"",
+         "receiver_bank":"",
+          "receiver_bank_code":"",
+          "receiver_swiftcode":"",
+          "receiver_branch":"",
+          "receiver_branch_code":"",
+          "exchange_rate":"",
+          "commission_amount":"",
+          "remarks":"",
+          "callbacks":["http://callbackurl"],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ecwere"
+       }
+    ]
+ });
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://dev.slafrica.net:6500/api/v1/request", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+```
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"",  //e.g 00271211
+          "collection_branch":"",
+          "transaction_type":"B2C",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"", // Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// P – Person B – Business
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"",//Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "receiver_account":"",
+         "receiver_bank":"",
+          "receiver_bank_code":"",
+          "receiver_swiftcode":"",
+          "receiver_branch":"",
+          "receiver_branch_code":"",
+          "exchange_rate":"",
+          "commission_amount":"",
+          "remarks":"",
+          "callbacks":["http://callbackurl"],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ecwere"
+       }
+    ]
+ }");
+Request request = new Request.Builder()
+  .url("https://dev.slafrica.net:6500/api/v1/request")
+  .method("POST", body)
+  .addHeader("Content-Type", "application/json")
+  .addHeader("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==")
+  .build();
+Response response = client.newCall(request).execute();
+
+```
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://dev.slafrica.net:6500/api/v1/request',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"",  //e.g 00271211
+          "collection_branch":"",
+          "transaction_type":"B2C",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"", // Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// P – Person B – Business
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"",//Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "receiver_account":"",
+         "receiver_bank":"",
+          "receiver_bank_code":"",
+          "receiver_swiftcode":"",
+          "receiver_branch":"",
+          "receiver_branch_code":"",
+          "exchange_rate":"",
+          "commission_amount":"",
+          "remarks":"",
+          "callbacks":["http://callbackurl"],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ecwere"
+       }
+    ]
+ }',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    'Authorization: Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ=='
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+
+```
+```csharp
+var client = new RestClient("https://dev.slafrica.net:6500/api/v1/request");
+client.Timeout = -1;
+var request = new RestRequest(Method.POST);
+request.AddHeader("Content-Type", "application/json");
+request.AddHeader("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==");
+request.AddParameter("application/json", "{
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"",  //e.g 00271211
+          "collection_branch":"",
+          "transaction_type":"B2C",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"", // Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// P – Person B – Business
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"",//Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "receiver_account":"",
+         "receiver_bank":"",
+          "receiver_bank_code":"",
+          "receiver_swiftcode":"",
+          "receiver_branch":"",
+          "receiver_branch_code":"",
+          "exchange_rate":"",
+          "commission_amount":"",
+          "remarks":"",
+          "callbacks":["http://callbackurl"],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ecwere"
+       }
+    ]
+ }",  ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+```
+```json
+{
+   "entries":[
+      {
+         "partner_id":"PARTNERID",
+         "transaction_ref":"",
+         "transaction_date":"",  //e.g 00271211
+         "collection_branch":"",
+         "transaction_type":"B2C",
+         "sender_type":"",
+         "sender_full_name":"",
+         "sender_address":"",
+         "sender_city":"",
+         "sender_country_code":"",
+         "sender_currency_code":"",
+         "sender_mobile":"",
+         "send_amount":"",
+         "sender_id_type":"", // Passport, ID, Drivers Licence
+         "sender_id_number":"",
+         "receiver_type":"",// P – Person B – Business
+         "receiver_full_name":"",
+         "receiver_country_code":"",
+         "receiver_currency_code":"",
+         "receiver_amount":"",
+         "receiver_city":"",
+         "receiver_address":"",
+         "receiver_mobile":"",
+         "mobile_operator":"SAFARICOM",
+         "receiver_id_type":"",//Passport, ID, Drivers Licence
+         "receiver_id_number":"",
+         "receiver_account":"",
+        "receiver_bank":"",
+         "receiver_bank_code":"",
+         "receiver_swiftcode":"",
+         "receiver_branch":"",
+         "receiver_branch_code":"",
+         "exchange_rate":"",
+         "commission_amount":"",
+         "remarks":"",
+         "callbacks":["http://callbackurl"],
+         "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ecwere"
+      }
+   ]
+}
+
+//Sample Request
+{
+   "entries":[
+      {
+         "partner_id":"PARTNERID",
+         "transaction_ref":"1115753440101",
+         "transaction_date":"00271211",
+         "collection_branch":"07",
+         "transaction_type":"B2C",
+         "sender_type":"P",
+         "sender_full_name":"John Doe",
+         "sender_address":"VIA SAVIGNONE",
+         "sender_city":"Roma",
+         "sender_country_code":"ITA",
+         "sender_currency_code":"USD",
+         "sender_mobile":"254720111222",
+         "send_amount":"150.77",
+         "sender_id_type":"OTHER",
+         "sender_id_number":"124124124",
+         "receiver_type":"P",
+         "receiver_full_name":"Jane Doe",
+         "receiver_country_code":"KEN",
+         "receiver_currency_code":"KES",
+         "receiver_amount":"15708",
+         "receiver_city":"Nairobi",
+         "receiver_address":"334",
+         "receiver_mobile":"254720000000",
+         "mobile_operator":"SAFARICOM",
+         "receiver_id_type":"ID",
+         "receiver_id_number":"12344555",
+         "receiver_account":"254700010010",
+        "receiver_bank":"EQUITY BANK LIMITED",
+         "receiver_bank_code":"68",
+         "receiver_swiftcode":"EQBLKENAXXX",
+         "receiver_branch":"Equity Bank",
+         "receiver_branch_code":"68000",
+         "exchange_rate":"105.02",
+         "commission_amount":"1.2",
+         "remarks":"FAMILY_SUPPORT",
+         "callbacks":["http://callbackurl"],
+         "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+      }
+   ]
+}
+
+Sample response
+
+{
+    "response_code": 200,
+    "resource": {
+        "date_time_added": 1618230105,
+        "added_by": 0,
+        "date_time_modified": 1618230105,
+        "modified_by": null,
+        "user_activity_log_id": null,
+        "source_ip": null,
+        "latest_ip": null,
+        "request_id": 11619,
+        "request_number": "210412000005",
+        "request_hash": "0f078646bdc5430be9f662b8784e0843c08c8215184e86c186d9ad9d527151d54fee12ab8f90a9be2ea0618f0283bf009cffc0cd48bf8fe129329ee1e676676b",
+        "request_status": "NEW",
+        "transactions": 1,
+        "transactions_value": 150.77,
+        "original_message": "{entries=[{partner_id=UPESIMTS, transaction_ref=1115753440101, transaction_date=00271211, collection_branch=07, transaction_type=B2C, sender_type=P, sender_full_name=John Doe, sender_address=VIA SAVIGNONE, sender_city=Roma, sender_country_code=ITA, sender_currency_code=USD, sender_mobile=254720111222, send_amount=150.77, sender_id_type=OTHER, sender_id_number=124124124, receiver_type=P, receiver_full_name=Jane Doe, receiver_country_code=KEN, receiver_currency_code=KES, receiver_amount=15708, receiver_city=Nairobi, receiver_address=334, receiver_mobile=254720000000, mobile_operator=SAFARICOM, receiver_id_type=ID, receiver_id_number=12344555, receiver_account=254700010010, receiver_bank=EQUITY BANK LIMITED, receiver_bank_code=68, receiver_swiftcode=EQBLKENAXXX, receiver_branch=Equity Bank, receiver_branch_code=68000, exchange_rate=105.02, commission_amount=1.2, remarks=FAMILY_SUPPORT, callbacks=[http://callbackurl], hash=b0f9793653bcaaec5815cuud7a04369660d5d4ec}]}",
+        "record_version": 0
+    },
+    "extra_data": [
+        [
+            {
+                "date_time_added": 1618230105,
+                "added_by": 0,
+                "date_time_modified": 1618230105,
+                "modified_by": null,
+                "user_activity_log_id": null,
+                "source_ip": null,
+                "latest_ip": null,
+                "transaction_id": 11676,
+                "request_id": 11619,
+                "request_number": "210412000005",
+                "partner_id": "PARTNERID",
+                "partner_name": "PARTNERID",
+                "transaction_ref": "1115753440101",
+                "transaction_date": "00271211",
+                "collection_branch": "07",
+                "transaction_type": "B2C",
+                "service_type": null,
+                "sender_type": "P",
+                "sender_full_name": "John Doe",
+                "sender_address": "VIA SAVIGNONE",
+                "sender_city": "Roma",
+                "sender_country_code": "ITA",
+                "sender_currency_code": "USD",
+                "sender_mobile": "254720111222",
+                "send_amount": 150.77,
+                "sender_id_type": "Other",
+                "sender_id_number": "124124124",
+                "receiver_type": "P",
+                "receiver_full_name": "Jane Doe",
+                "receiver_country_code": "KEN",
+                "receiver_currency_code": "KES",
+                "receiver_amount": 15708,
+                "receiver_city": "Nairobi",
+                "receiver_address": "334",
+                "receiver_mobile": "254720000000",
+                "mobile_operator": "SAFARICOM",
+                "receiver_id_type": "National ID",
+                "receiver_id_number": "12344555",
+                "receiver_account": "254700010010",
+                "receiver_bank": "EQUITY BANK LIMITED",
+                "receiver_bank_code": "68",
+                "receiver_swiftcode": "EQBLKENAXXX",
+                "receiver_branch": "Equity Bank",
+                "receiver_branch_code": "68000",
+                "exchange_rate": 105.02,
+                "commission_amount": 1.2,
+                "remarks": "FAMILY_SUPPORT",
+                "transaction_number": "210412000005",
+                "transaction_hash": "787f9c0dcfb3961c6e6a831bf4e7b561198e487803434e713f888ad7a89ad22de1e410472d0f4b890719dd0f838fcae722ee7e05d1d7b58669e2342978fcc4e2",
+                "transaction_status": "NEW",
+                "transaction_response": null,
+                "switch_response": null,
+                "query_status": null,
+                "query_response": null,
+                "callbacks": "[\"http://callbackurl\"]",
+                "callbacks_status": null,
+                "queued_callbacks": 1,
+                "completed_callbacks": 0,
+                "callback_status": 0,
+                "record_version": 0,
+                "need_syncing": true,
+                "synced": false,
+                "sent": false,
+                "incident_code": null,
+                "incident_description": null,
+                "incident_note": null,
+                "payment_mode_id": null,
+                "payment_mode_name": null,
+                "channel": null,
+                "partner_process": null,
+                "partner_status": null,
+                "partner_status_name": null,
+                "receiver_dob": null,
+                "receiver_gender": null,
+                "receiver_city_id": null,
+                "receiver_form_of_payment": null,
+                "receiver_proof_of_address_collected": false,
+                "receiver_kyc_verified": false,
+                "partner_message": null,
+                "sender_dob": null,
+                "receiver_state_id": null,
+                "source_account": null,
+                "receiver_id_expiration_date": null,
+                "receiver_id_date_of_issue": null,
+                "sender_first_name": null,
+                "sender_last_name": null,
+                "sender_middle_name": null,
+                "sender_fourth_name": null,
+                "receiver_first_name": null,
+                "receiver_middle_name": null,
+                "receiver_last_name": null,
+                "receiver_fourth_name": null,
+                "receiver_nationality": null,
+                "receiver_id_place_of_issue": null,
+                "receiver_id_expiry_date": null,
+                "paid_branch_code": null,
+                "document_image": null,
+                "receiver_occupation": null,
+                "sender_relation_with_receiver": null,
+                "pan": null,
+                "expiry_date": null,
+                "card_security_code": null,
+                "acs_url": null,
+                "pa_rec": null,
+                "deleted_at": null,
+                "updated_at": null,
+                "three_dsecure_signedpares": null,
+                "three_dsecure_acsurl": null,
+                "three_dsecure_requestid": null,
+                "payment_ref": null,
+                "bank_code": null,
+                "queried": false
+            }
+        ]
+    ]
+}
+
+```
+### Request information
+|Field | Mandatory | Format | Description
+|------ | ------ | ------ | ------
+|partner_id | Y | String| Partner Identifier
+|transaction_ref | Y | String | Unique transaction reference from the partner
+|transaction_date | Y | String | Transaction date(DDMMYY)
+|collection_branch | Y | String | Y – If transaction_type mode is B O – If transaction_type Mode is M,C
+|transaction_type | Y | String | B – Bank Transfer M – Mobile Wallet C – Cash Payment U – Utility Bill Payments
+|sender_type | Y | String | P – Person B – Business
+|sender_full_name | Y | String | Sender full names
+|sender_address | Y | String | Sender Address
+|sender_city | Y | String | Sender City
+|sender_country_code | Y | String | Sender Country Code
+|sender_currency_code | Y | String | Sender Currency Code
+|sender_mobile | O | String | Sender Mobile
+|send_amount | Y | String | Sender Amount
+|sender_id_type | Y | String | Sender identification e.g. Passport,ID,Drivers Licence
+|sender_id_number | Y | String | Sender identification number
+|receiver_type | Y | String | P – Person B – Business
+|receiver_full_name | Y | String | Receiver full names
+|receiver_country_code | Y | String | Receiver Country Code
+|receiver_currency_code | Y | String | Receiver Currency Code
+|receiver_amount | Y | String | Receiver Amount
+|receiver_city | Y | String | Sender City Name
+|receiver_address | Y | String | Receiver Address
+|receiver_mobile | Y,O | String | Receiver Mobile Number Y – If Payment mode is M O – If Payment Mode is B,C
+|mobile_operator | Y,O | String | Mobile operator e.g SAFARICOM Y – If Payment mode is M O – If Payment Mode is B,C
+|receiver_id_type | Y | String | Receiver identification e.g. Passport,ID,Drivers License
+|receiver_id_number | Y | String | Receiver identification number
+|receiver_account | Y,0 | String | Receiver account number Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_bank | Y,0 | String | Receiver bank name Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_bank_code | Y,0 | String | Receiver bank Code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_branch_code | Y,0 | String | Receiver branch Code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_swiftcode | Y,0 | String | Receiver bank swift code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_branch | Y,0 | String | Receiver bank branch Y – If Payment mode is B O – If Payment Mode is M,C
+receiver_branch_code| Y,0 | String | Receiver bank Code Y – If Payment mode is B O – If Payment Mode is M,C
+|exchange_rate | 0 | n12 | Exchange rate used for the transaction
+|commission_amount | 0 | String | Commission amount if applicable
+|remarks | O | String | Remarks
+|callbacks | Y,0 | String array | List of call back urls. It can be more than one separated by comma|
+
+## c2b
+```python
+import requests
+
+url = "https://dev.slafrica.net:6500/api/v1/request"
+
+payload="{
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"", //e.g 00271211
+          "transaction_type":"C2B",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"",// Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// Passport, ID, Drivers Licence
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"", // Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "remarks":"",
+          "need_syncing":true,
+          "callbacks":[
+             "https://api.callback.com/v1/switchlink/callback"
+          ],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+       }
+    ]
+ }"
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ=='
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+
+
+```
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==");
+
+var raw = JSON.stringify({
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"", //e.g 00271211
+          "transaction_type":"C2B",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"",// Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// Passport, ID, Drivers Licence
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"", // Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "remarks":"",
+          "need_syncing":true,
+          "callbacks":[
+             "https://api.callback.com/v1/switchlink/callback"
+          ],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+       }
+    ]
+ });
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://dev.slafrica.net:6500/api/v1/request", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"", //e.g 00271211
+          "transaction_type":"C2B",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"",// Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// Passport, ID, Drivers Licence
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"", // Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "remarks":"",
+          "need_syncing":true,
+          "callbacks":[
+             "https://api.callback.com/v1/switchlink/callback"
+          ],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+       }
+    ]
+ }");
+Request request = new Request.Builder()
+  .url("https://dev.slafrica.net:6500/api/v1/request")
+  .method("POST", body)
+  .addHeader("Content-Type", "application/json")
+  .addHeader("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==")
+  .build();
+Response response = client.newCall(request).execute();
+
+```
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://dev.slafrica.net:6500/api/v1/request',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"", //e.g 00271211
+          "transaction_type":"C2B",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"",// Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// Passport, ID, Drivers Licence
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"", // Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "remarks":"",
+          "need_syncing":true,
+          "callbacks":[
+             "https://api.callback.com/v1/switchlink/callback"
+          ],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+       }
+    ]
+ }',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    'Authorization: Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ=='
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+
+```
+```csharp
+var client = new RestClient("https://dev.slafrica.net:6500/api/v1/request");
+client.Timeout = -1;
+var request = new RestRequest(Method.POST);
+request.AddHeader("Content-Type", "application/json");
+request.AddHeader("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==");
+request.AddParameter("application/json", "{
+    "entries":[
+       {
+          "partner_id":"PARTNERID",
+          "transaction_ref":"",
+          "transaction_date":"", //e.g 00271211
+          "transaction_type":"C2B",
+          "sender_type":"",
+          "sender_full_name":"",
+          "sender_address":"",
+          "sender_city":"",
+          "sender_country_code":"",
+          "sender_currency_code":"",
+          "sender_mobile":"",
+          "send_amount":"",
+          "sender_id_type":"",// Passport, ID, Drivers Licence
+          "sender_id_number":"",
+          "receiver_type":"",// Passport, ID, Drivers Licence
+          "receiver_full_name":"",
+          "receiver_country_code":"",
+          "receiver_currency_code":"",
+          "receiver_amount":"",
+          "receiver_city":"",
+          "receiver_address":"",
+          "receiver_mobile":"",
+          "mobile_operator":"SAFARICOM",
+          "receiver_id_type":"", // Passport, ID, Drivers Licence
+          "receiver_id_number":"",
+          "remarks":"",
+          "need_syncing":true,
+          "callbacks":[
+             "https://api.callback.com/v1/switchlink/callback"
+          ],
+          "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+       }
+    ]
+ }",  ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+
+```
+```json
+{
+   "entries":[
+      {
+         "partner_id":"PARTNERID",
+         "transaction_ref":"",
+         "transaction_date":"", //e.g 00271211
+         "transaction_type":"C2B",
+         "sender_type":"",
+         "sender_full_name":"",
+         "sender_address":"",
+         "sender_city":"",
+         "sender_country_code":"",
+         "sender_currency_code":"",
+         "sender_mobile":"",
+         "send_amount":"",
+         "sender_id_type":"",// Passport, ID, Drivers Licence
+         "sender_id_number":"",
+         "receiver_type":"",// Passport, ID, Drivers Licence
+         "receiver_full_name":"",
+         "receiver_country_code":"",
+         "receiver_currency_code":"",
+         "receiver_amount":"",
+         "receiver_city":"",
+         "receiver_address":"",
+         "receiver_mobile":"",
+         "mobile_operator":"SAFARICOM",
+         "receiver_id_type":"", // Passport, ID, Drivers Licence
+         "receiver_id_number":"",
+         "remarks":"",
+         "need_syncing":true,
+         "callbacks":[
+            "https://api.callback.com/v1/switchlink/callback"
+         ],
+         "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+      }
+   ]
+}
+
+// Sample Request
+
+{
+   "entries":[
+      {
+         "partner_id":"PARTNERID",
+         "transaction_ref":"ref12345112",
+         "transaction_date":"1597168143",
+         "transaction_type":"C2B",
+         "sender_type":"P",
+         "sender_full_name":"Jane Doe",
+         "sender_address":"Kenya",
+         "sender_city":"Nairobi",
+         "sender_country_code":"KEN",
+         "sender_currency_code":"KES",
+         "sender_mobile":"+254720000000",
+         "send_amount":"10000",
+         "sender_id_type":"OTHER",
+         "sender_id_number":"+254720000000",
+         "receiver_type":"P",
+         "receiver_full_name":"Jane Doe",
+         "receiver_country_code":"KEN",
+         "receiver_currency_code":"KES",
+         "receiver_amount":"10000",
+         "receiver_city":"Nairobi",
+         "receiver_address":"Nairobi",
+         "receiver_mobile":"+254720000000",
+         "mobile_operator":"SAFARICOM",
+         "receiver_id_type":"ID",
+         "receiver_id_number":"12345",
+         "remarks":"Deposit of KES 10000 ",
+         "need_syncing":true,
+         "callbacks":[
+            "https://api.callback.com/v1/switchlink/callback"
+         ],
+         "hash":"b0f9793653bcaaec5815cuud7a04369660d5d4ec"
+      }
+   ]
+}
+
+Sample Response
+
+{
+    "response_code": 200,
+    "resource": {
+        "date_time_added": 1618232790,
+        "added_by": 0,
+        "date_time_modified": 1618232790,
+        "modified_by": null,
+        "user_activity_log_id": null,
+        "source_ip": null,
+        "latest_ip": null,
+        "request_id": 11620,
+        "request_number": "210412000006",
+        "request_hash": "bae03c5ea79cbfe85d004d18063392476e8bec5ed0a7f7a90a96150e3a41da4dc66596ced643e63bd8539cfda3b4135a7842443a564f18edb81fe0fb0797ad7c",
+        "request_status": "NEW",
+        "transactions": 1,
+        "transactions_value": 10000,
+        "original_message": "{entries=[{partner_id=UPESIMTS, transaction_ref=ref12345112, transaction_date=1597168143, transaction_type=C2B, sender_type=P, sender_full_name=Jane Doe, sender_address=Kenya, sender_city=Nairobi, sender_country_code=KEN, sender_currency_code=KES, sender_mobile=+254720000000, send_amount=10000, sender_id_type=OTHER, sender_id_number=+254720000000, receiver_type=P, receiver_full_name=Jane Doe, receiver_country_code=KEN, receiver_currency_code=KES, receiver_amount=10000, receiver_city=Nairobi, receiver_address=Nairobi, receiver_mobile=+254720000000, mobile_operator=SAFARICOM, receiver_id_type=ID, receiver_id_number=12345, remarks=Deposit of KES 10000 , need_syncing=true, callbacks=[https://api.callback.com/v1/switchlink/callback], hash=b0f9793653bcaaec5815cuud7a04369660d5d4ec}]}",
+        "record_version": 0
+    },
+    "extra_data": [
+        [
+            {
+                "date_time_added": 1618232791,
+                "added_by": 0,
+                "date_time_modified": 1618232790,
+                "modified_by": null,
+                "user_activity_log_id": null,
+                "source_ip": null,
+                "latest_ip": null,
+                "transaction_id": 11677,
+                "request_id": 11620,
+                "request_number": "210412000006",
+                "partner_id": "PARTNERID",
+                "partner_name": "PARTNERID",
+                "transaction_ref": "ref12345112",
+                "transaction_date": "1597168143",
+                "collection_branch": null,
+                "transaction_type": "C2B",
+                "service_type": null,
+                "sender_type": "P",
+                "sender_full_name": "Jane Doe",
+                "sender_address": "Kenya",
+                "sender_city": "Nairobi",
+                "sender_country_code": "KEN",
+                "sender_currency_code": "KES",
+                "sender_mobile": "254720000000",
+                "send_amount": 10000,
+                "sender_id_type": "Other",
+                "sender_id_number": "+254720000000",
+                "receiver_type": "P",
+                "receiver_full_name": "Jane Doe",
+                "receiver_country_code": "KEN",
+                "receiver_currency_code": "KES",
+                "receiver_amount": 10000,
+                "receiver_city": "Nairobi",
+                "receiver_address": "Nairobi",
+                "receiver_mobile": "+254720000000",
+                "mobile_operator": "SAFARICOM",
+                "receiver_id_type": "National ID",
+                "receiver_id_number": "12345",
+                "receiver_account": null,
+                "receiver_bank": null,
+                "receiver_bank_code": null,
+                "receiver_swiftcode": null,
+                "receiver_branch": null,
+                "receiver_branch_code": null,
+                "exchange_rate": 1,
+                "commission_amount": 0,
+                "remarks": "Deposit of KES 10000 ",
+                "transaction_number": "210412000006",
+                "transaction_hash": "38a3c7df2e811821e8116d885c9543d510a16ff004d9ff2139ae2a91986ae1c83882bd97a63d007dd5d306a8ce8b8fae4ce9f8f651819cae6e60d9f695cafad7",
+                "transaction_status": "NEW",
+                "transaction_response": null,
+                "switch_response": null,
+                "query_status": null,
+                "query_response": null,
+                "callbacks": "[\"https://api.callback.com/v1/switchlink/callback\"]",
+                "callbacks_status": null,
+                "queued_callbacks": 1,
+                "completed_callbacks": 0,
+                "callback_status": 0,
+                "record_version": 0,
+                "need_syncing": true,
+                "synced": false,
+                "sent": false,
+                "incident_code": null,
+                "incident_description": null,
+                "incident_note": null,
+                "payment_mode_id": null,
+                "payment_mode_name": null,
+                "channel": null,
+                "partner_process": null,
+                "partner_status": null,
+                "partner_status_name": null,
+                "receiver_dob": null,
+                "receiver_gender": null,
+                "receiver_city_id": null,
+                "receiver_form_of_payment": null,
+                "receiver_proof_of_address_collected": false,
+                "receiver_kyc_verified": false,
+                "partner_message": null,
+                "sender_dob": null,
+                "receiver_state_id": null,
+                "source_account": null,
+                "receiver_id_expiration_date": null,
+                "receiver_id_date_of_issue": null,
+                "sender_first_name": null,
+                "sender_last_name": null,
+                "sender_middle_name": null,
+                "sender_fourth_name": null,
+                "receiver_first_name": null,
+                "receiver_middle_name": null,
+                "receiver_last_name": null,
+                "receiver_fourth_name": null,
+                "receiver_nationality": null,
+                "receiver_id_place_of_issue": null,
+                "receiver_id_expiry_date": null,
+                "paid_branch_code": null,
+                "document_image": null,
+                "receiver_occupation": null,
+                "sender_relation_with_receiver": null,
+                "pan": null,
+                "expiry_date": null,
+                "card_security_code": null,
+                "acs_url": null,
+                "pa_rec": null,
+                "deleted_at": null,
+                "updated_at": null,
+                "three_dsecure_signedpares": null,
+                "three_dsecure_acsurl": null,
+                "three_dsecure_requestid": null,
+                "payment_ref": null,
+                "bank_code": null,
+                "queried": false
+            }
+        ]
+    ]
+}
+
+```
+### Request information
+|Field | Mandatory | Format | Description
+|------ | ------ | ------ | ------
+|partner_id | Y | String | Partner Identifier
+|transaction_ref | Y | String | Unique transaction reference from the partner
+|transaction_date | Y | String | Transaction date(DDMMYY)
+|transaction_type | Y | String | B – Bank Transfer M – Mobile Wallet C – Cash Payment U – Utility Bill Payments
+|sender_type | Y | String | P – Person B – Business
+|sender_full_name | Y | String | Sender full names
+|sender_address | Y | String | Sender Address
+|sender_city | Y | String | Sender City
+|sender_country_code | Y | String | Sender Country Code
+|sender_currency_code | Y | String | Sender Currency Code
+|sender_mobile | O | String | Sender Mobile
+|send_amount | Y | String | Sender Amount
+|sender_id_type | Y | String | Sender identification e.g. Passport,ID,Drivers Licence
+|sender_id_number | Y | String | Sender identification number
+|receiver_type | Y | String | P – Person B – Business
+|receiver_full_name | Y | String | Receiver full names
+|receiver_country_code | Y | String | Receiver Country Code
+|receiver_currency_code | Y | String | Receiver Currency Code
+|receiver_amount | Y | String | Receiver Amount
+|receiver_city | Y | String | Sender City Name
+|receiver_address | Y | String | Receiver Address
+|receiver_mobile | Y,O | String | Receiver Mobile Number Y – If Payment mode is M O – If Payment Mode is B,C
+|mobile_operator | Y,O | String | Mobile operator e.g SAFARICOM Y – If Payment mode is M O – If Payment Mode is B,C
+|receiver_id_type | Y | String | Receiver identification e.g. Passport,ID,Drivers License
+|receiver_id_number | Y | String | Receiver identification number
+|remarks | O | String | Remarks
+|callbacks | Y,0 | Array [] | List of call back urls. It can be more than one separated by comma|
+
+## Card
+
+```json
+{
+    "merchant_reference":"",
+    "partner_id":"PARTNERID",
+    "application_id":"{E261AAA-XXXX-XXXX-XXX-7AAB}",
+    "application_mode":"Live", // Live / Test
+    "currency":"",
+    "amount":"",
+    "expiry_date":"", /MMYY
+    "card_security_code":"", 
+    "pan":"", // Primary Account Number
+    "request_type":"", //ENROL3DS,VALIDATE3DS,DEBIT3DS,VOID
+    "callbacks":[
+       "https://callbackurl"
+    ]
+ }
+ 
+Below is the immediate response
+
+{
+    "response_code": 200,
+    "resource": {
+        "request_id": 57,
+        "date_time_added": 1618315416,
+        "added_by": 0,
+        "source_ip": "::1",
+        "date_time_modified": 1618315416,
+        "modified_by": 1,
+        "partner_id": "PARTNERID",
+        "application_id": "{EXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX004F}",
+        "application_mode": "LIVE",
+        "merchant_reference": "160821011",
+        "merchant_trace": "160821011",
+        "currency": "KES",
+        "amount": "50",
+        "expiry_date": "08xx",
+        "card_security_code": "xx6",
+        "pan": "40xx-xxxx-xxxx-xx59",
+        "cardholder_authentication_id": null,
+        "cardholder_authentication_data": null,
+        "electronic_commerce_indicator": null,
+        "three_dsecure_requestid": null,
+        "three_dsecure_signedpares": null,
+        "request_type": "ENROL3DS",
+        "request_status": "NEW",
+        "sent": false,
+        "received": false,
+        "response_description": null,
+        "response": null,
+        "result_description": null,
+        "record_version": 0,
+        "three_dsecure_acsurl": null,
+        "original_ref": "160821011",
+        "callbacks": "[\"https://callback_url/\"]",
+        "callbacks_status": null,
+        "queued_callbacks": 1,
+        "completed_callbacks": 0,
+        "callback_status": 0
+    }
+}
+
+
+<callback response sample>
+
+{
+	"request_id": 56,
+	"merchant_reference": "160821010",
+	"merchant_trace": "160821010",
+	"pan": "40xx-xxxx-xxxx-xx59",
+	"card_security_code": "xx6",
+	"expiry_date": "08xx",
+	"request_type": "ENROL3DS",
+	"request_status": "ENROLLED",
+	"response_description": "{Status=0, Code=0, Description=, AppServer=PRODGW2012APP1, DBServer=PRODGW2012DB2, Gateway=HOST}",
+	"response": "{Version=2.0, Direction=Response, Enquiry={ThreeDSecure_PAReq=eJxVUu1SwjAQfJUOD9B80FJljsyg6Iii00KF35k00kppS5pa9OlNSgHNn9xu7jZ3m0CcKilnKykaJRm8yrrmW+lkyWQQLiM/GFLfGw0YhNOlPDD4kqrOyoIRF7sU0BmaOiVSXmgGXBzu5m/MIzTAt4B6CHup5jM2xN0i2AYE0ImFgu8lW7WZFmmeFTtn+qEywZ2FTgB1ZyDKptDqmwUEAzoDaFTOUq2rMUJt27r1RYF3Aq4o3Z0EZNMAXVsMGxvVRvaYJSz63P5s1s/xJs8X4XvtxbuKR+uojR/FBJDNgIRrySimBHtk6BAy9oIxNY10PPC97Ye9PKwcH7vY8D0Dlb1oegI+tid/GTCWK1mIb+Zhz0x1RiCPVVlIk2EcvsSQyFqYMfrtOsP9kzVdaGOk8XxEMaE+scZ3lBXLjFeU4ptOzQJAtgj1b4r6RzfRv8/wC5rgsaE=, ThreeDSecure_ACS_URL=https://acssp.thecardservicesonline.com/mdpayacs/pareq, ThreeDSecure_RequestID={62D32780-F404-4FD1-A07E-54C5989882F0}, CardHolderAuthenticationID=, CardHolderAuthenticationData=, ElectronicCommerceIndicator=SecureChannel, ApplicationID={5ABEB415-3115-45FB-80D1-0632B7CE2393}, Command=ThreeDSecureCheckEnrollment, Mode=Live, RequestID={62D32780-F404-4FD1-A07E-54C5989882F0}, Result={Status=0, Code=0, Description=, AppServer=PRODGW2012APP1, DBServer=PRODGW2012DB2, Gateway=HOST}}}",
+	"cardholder_authentication_id": null,
+	"cardholder_authentication_data": null,
+	"electronic_commerce_indicator": "SecureChannel",
+	"three_dsecure_requestid": "{62D32780-F404-4FD1-A07E-54C5989882F0}",
+	"three_dsecure_signedpares": "eJxVUu1SwjAQfJUOD9B80FJljsyg6Iii00KF35k00kppS5pa9OlNSgHNn9xu7jZ3m0CcKilnKykaJRm8yrrmW+lkyWQQLiM/GFLfGw0YhNOlPDD4kqrOyoIRF7sU0BmaOiVSXmgGXBzu5m/MIzTAt4B6CHup5jM2xN0i2AYE0ImFgu8lW7WZFmmeFTtn+qEywZ2FTgB1ZyDKptDqmwUEAzoDaFTOUq2rMUJt27r1RYF3Aq4o3Z0EZNMAXVsMGxvVRvaYJSz63P5s1s/xJs8X4XvtxbuKR+uojR/FBJDNgIRrySimBHtk6BAy9oIxNY10PPC97Ye9PKwcH7vY8D0Dlb1oegI+tid/GTCWK1mIb+Zhz0x1RiCPVVlIk2EcvsSQyFqYMfrtOsP9kzVdaGOk8XxEMaE+scZ3lBXLjFeU4ptOzQJAtgj1b4r6RzfRv8/wC5rgsaE=",
+	"three_dsecure_acsurl": "https://acssp.thecardservicesonline.com/mdpayacs/pareq"
+}
+
+
+-----------------------------------------------------------
+<Javascript>
+
+<script>
+<body onload="document.PAEnrollForm.submit ();">
+<form id="PAEnrollForm" action="https://three_dsecure_acsurl" method="post” target="paInlineFrame">
+<input type="hidden" name="PaReq" value="three_dsecure_signedpares" />
+<input type="hidden" name="TermUrl" value="http://merchantpage/url" />
+<input type="hidden" name="MD" value="three_dsecure_requestid" />
+</form>
+</body>
+</script>
+
+
+
+-----------------------------------------------------------
+
+<h2>Payer Authentication Inline Window</h2>
+<iframe name="paInlineFrame" height="400px" width="400px">
+</iframe>
+
+
+
+----------------------------------------------------------
+Request Response
+
+{
+    "request_id": 56,
+    "date_time_added": 1608216696,
+    "added_by": 0,
+    "source_ip": "::1",
+    "date_time_modified": 160821010,
+    "modified_by": 1,
+    "partner_id": "PARTNERID",
+    "application_id": "{EXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX004F}",
+    "application_mode": "LIVE",
+    "merchant_reference": "160821383212",
+    "merchant_trace": "160821383212",
+    "currency": "KES",
+    "amount": "50",
+    "expiry_date": "04xx",
+    "card_security_code": "xx8",
+    "pan": "41xx-xxxx-xxxx-xx30",
+    "cardholder_authentication_id": "Ul3MjiUW+3333333335/g9Cgs3TU/",
+    "cardholder_authentication_data": "Vs55555555+ab4k/ZJ8DYSp4N",
+    "electronic_commerce_indicator": "SecureChannel",
+    "three_dsecure_requestid": "{04A0F741-F66A-43C5-AC58-48F61B1032ED}",
+    "three_dsecure_signedpares": "eJxVUuFygjAMfhXOB68WUbf+ab4k/ZJ8DYSp4NwLOKsFpzDnVRUl3MjiUW+5XtnOQ3/g9Cgs3TU/UvjhosqKnBITmxagK1TPBEujXFKI2PHJX1CbWAP8CKiDcODC92gft4dgbRBAFy/k0YHT4JRJlu6zfGe4W5GxyJjJGFAbA1bUuRRnOiAY0BVALfY0lbIcInQ6nczqxhC1BCYrzB0HpNMA3Vtc1tqqFG2TxfRjtwlX+5cw9KbzhUfG75NdP5gU583GHwHSGRBHklMLW5hYZGAQe+iQIVHDtX6IDrof+joJDAebWDXYeaDUhdwLcLCO/PWAUlzwnJ2pjW011RUBb8oi5ypDKXyzIeYVU2N0132G8bMWnUklpI/dRH43b1Pf9b6Ex9zZImm21WdS+rqrS5Kmz5R6Vlu1A4A0Dep+GXVboKx/2/ELVgW4Bg==",
+    "request_type": "DEBIT3DS",
+    "request_status": "AUTHORISED",
+    "sent": true,
+    "received": true,
+    "response_description": "{Status=0, Code=0, Description=, AppServer=PRODGW2012APP1, DBServer=PRODGW2012DB2, Gateway=HOST}",
+    "response": "{Version=2.0, Direction=Response, Enquiry={ThreeDSecure_PAReq=eJxVUuFygjAMfhXOB6Atwrx5sXdM9MamToW5209WKjAVsJSJb78WUbf+ab4k/ZJ8DYSp4NwLOKsFpzDnVRUl3MjiUW+5XtnOQ3/g9Cgs3TU/UvjhosqKnBITmxagK1TPBEujXFKI2PHJX1CbWAP8CKiDcODC92gft4dgbRBAFy/k0YHT4JRJlu6zfGe4W5GxyJjJGFAbA1bUuRRnOiAY0BVALfY0lbIcInQ6nczqxhC1BCYrzB0HpNMA3Vtc1tqqFG2TxfRjtwlX+5cw9KbzhUfG75NdP5gU583GHwHSGRBHklMLW5hYZGAQe+iQIVHDtX6IDrof+joJDAebWDXYeaDUhdwLcLCO/PWAUlzwnJ2pjW011RUBb8oi5ypDKXyzIeYVU2N0132G8bMWnUklpI/dRH43b1Pf9b6Ex9zZImm21WdS+rqrS5Kmz5R6Vlu1A4A0Dep+GXVboKx/2/ELVgW4Bg==, ThreeDSecure_ACS_URL=https://authentication.cardinalcommerce.com/ThreeDSecure/V1_0_2/PayerAuthentication?issuerId=5ac7a5a524797889f4a06b8e&transactionId=I0AgtjxOFIADbrDcALNgxfsYgpI0, ThreeDSecure_RequestID={04A0F741-F66A-43C5-AC58-48F61B1032ED}, CardHolderAuthenticationID=, CardHolderAuthenticationData=, ElectronicCommerceIndicator=SecureChannel, ApplicationID={5ABEB415-3115-45FB-80D1-0632B7CE2393}, Command=ThreeDSecureCheckEnrollment, Mode=Live, RequestID={04A0F741-F66A-43C5-AC58-48F61B1032ED}, Result={Status=0, Code=0, Description=, AppServer=PRODGW2012APP1, DBServer=PRODGW2012DB2, Gateway=HOST}}}",
+    "result_description": "Successful",
+    "record_version": 0,
+    "three_dsecure_acsurl": "https://authentication.cardinalcommerce.com/ThreeDSecure/V1_0_2/PayerAuthentication?issuerId=5ac7a5a524797889f4a06b8e&transactionId=I0AgtjxOFIADbrDcALNgxfsYgpI0",
+    "original_ref": "160821383212",
+    "callbacks": "[\"https://callback url\"]",
+    "callbacks_status": "[FAILED]",
+    "queued_callbacks": 0,
+    "completed_callbacks": 0,
+    "callback_status": 1
+}
+
+```
+### Card - ThreeDSecure (Also Known as “VerfifiedByVisa” OR “MasterCard Secure”)
+There are various types of transactions:
+
+- ‘ENROL3DS’ – This confirms that the card is 3DS enrolled .
+
+- ‘VALIDATE3DS’ - This validates the authentication data from the iframe.
+
+- ‘DEBIT3DS’ - This intiates a debit with the VALIDATE3DS authentication data.
+
+- ‘VOID’ - This voids a transaction that had been successful and reverses the transaction.
+
+###ReqHeader information
+|Category|Value|
+|--------|-----|
+|Http request| `POST `|
+|URL|https://dev.slafrica.net:6511/api/v1/request|
+
+
+
+###Request parameters
+|Field | Mandatory | Description
+|------ | ------ |------
+| merchant_reference|Y| Merchant reference |
+| partner_id|Y| Partner ID|
+| application_id|Y| application Id |
+| application_mode|Y| Application mode e.g "Live" |
+| currency|Y| Transaction currency |
+| amount|Y| Transaction amount |
+| expiry_date|Y| Card expiry date |
+| card_security_code|Y| card security code |
+| pan|Y|Primary account Number |
+| request_type|Y| types of transaction with options as listed above e.g "ENROL3DS"|
+
+
+###This transaction type is asynchronous.You will need to wait for callback or query the status to complete the transaction. 
+###Please see the callback response sample further below.
+
+
+If the Card(pan) issued on the request passes the 3DS enrollment check( i.e.”request_status”: “ENROLLED”) ,
+you will need to redirect the customer to an ACS(Access Control Server) url that will be returned on the call back url 
+or the query issued on the request i.e (“three_dsecure_acsurl”).On your merchant page,you will also need 
+to add the javascript code as shown on the right.The page typically includes JavaScript (an onLoad script) 
+that automatically posts the form.
+
+Note:replace variables with the relevant values returned on the callback.
+
+
+An iframe will pop up on the merchant page to complete the transaction. Please note should be large enough to show 400 * 400 pixels without scrolling. Add the tags on the right on the merchant checkout page.
+
+
+
+
+
+Once the customer enters the OTP from the iframe or fails to enter the OTP,the secure page will post a VERY LONG base64 encoded value(“PaRes”) to 
+callback “TermUrl”
+
+.e.g
+
+PaRes=eJy9WVmzosqyfjfC%2F9Cxz6Onm1llh2tFFDMoCMjoG%2FMggwqK8utvqb261%2 B3Td8fe5%2Bf6H4vVdzE%3D&MD=%7BA60D731D-78CB-417F-B337-7F9C742FA416%7D
+
+You should forward/post the value returned(“Pares”) from the iframe callback to a switch link API to complete the transaction.
+
+The following is the url to call with the pares:
+
+|Category|Value|
+|--------|-----|
+|Http request| `POST `|
+|URL|https://dev.slafrica.net:6511/callback/iveri/request|
+
+You should then query to get the final status of a transaction using the below url
+
+
+|Category|Value|
+|--------|-----|
+|Http request| `GET `|
+|URL|https://dev.slafrica.net:6511/api/iveri/status/merchant_reference|
+
+
+There are three status of the transactions:
+
+- ‘ENROLLED’ – This confirms that the card is 3DS enrolled .
+
+- ‘VALIDATED’ - This confirms the authenitication data has been validated.
+
+- ‘AUTHORISED’ - This shows the status was successful for the request_type.
+
+- ‘DECLINED’ - This means the transaction failed with the failure reason on the (“result_description”) field.
+
+
+
+## Status
+This status request allows you to check the status of a request made.
+
+
+|Category|Value|
+|--------|-----|
+|Http request| `GET `|
+|URL|https://dev.slafrica.net:6500/api/v1/request/${transaction_number} |
+
+
+```python
+import requests
+
+url = "https://dev.slafrica.net:6500/api/query/status/${transaction_number}"
+
+payload={}
+headers = {
+  'Authorization': 'Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ=='
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+
+print(response.text)
+
+
+```
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://dev.slafrica.net:6500/api/query/status/${transaction_number}", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+Request request = new Request.Builder()
+  .url("https://dev.slafrica.net:6500/api/query/status/${transaction_number}")
+  .method("GET", null)
+  .addHeader("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==")
+  .build();
+Response response = client.newCall(request).execute();
+
+```
+
+```php
+<?php
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://dev.slafrica.net:6500/api/query/status/${transaction_number}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ=='
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+
+```
+
+```csharp
+var client = new RestClient("https://dev.slafrica.net:6500/api/query/status/210408000004");
+client.Timeout = -1;
+var request = new RestRequest(Method.GET);
+request.AddHeader("Authorization", "Basic dXBlc2l0ZXN0OmRYQmxjMms2VFZRNlZISmhibk5tWlhJPQ==");
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+
+```
+
+
+##Callback
+
+Sample callback is on the right
+
+```json
+{
+    "date_time_added": 1592911873,
+    "added_by": 0,
+    "date_time_modified": 1592914075,
+    "modified_by": null,
+    "user_activity_log_id": null,
+    "source_ip": null,
+    "latest_ip": null,
+    "transaction_id": 9,
+    "request_id": 9,
+    "request_number": "200623000010",
+    "partner_id": "PARTNERID",
+    "partner_name": "PARTNERNAME",
+    "transaction_ref": "9d53d15a6",
+    "transaction_date": "00271211",
+    "collection_branch": "07",
+    "transaction_type": "B2C",
+    "service_type": null,
+    "sender_type": "P",
+    "sender_full_name": "John Doe",
+    "sender_address": "VIA SAVIGNONE",
+    "sender_city": "Roma",
+    "sender_country_code": "ITA",
+    "sender_currency_code": "USD",
+    "sender_mobile": "254720000000",
+    "send_amount": 150.77,
+    "sender_id_type": "Passport",
+    "sender_id_number": "12344566",
+    "receiver_type": "P",
+    "receiver_full_name": "Jane Doe",
+    "receiver_country_code": "KEN",
+    "receiver_currency_code": "KES",
+    "receiver_amount": 15708,
+    "receiver_city": "Nairobi",
+    "receiver_address": "",
+    "receiver_mobile": "254720000000",
+    "mobile_operator": "SAFARICOM",
+    "receiver_id_type": "National ID",
+    "receiver_id_number": null,
+    "receiver_account": "",
+    "receiver_bank": "N/A",
+    "receiver_bank_code": "N/A",
+    "receiver_swiftcode": "07",
+    "receiver_branch": "",
+    "receiver_branch_code": "N/A",
+    "exchange_rate": 0,
+    "commission_amount": 1.2,
+    "remarks": "FAMILY_SUPPORT",
+    "paybill": null,
+    "transaction_number": "200623000010",
+    "transaction_hash": "93d1b1751820cb2f519ff7672950b5be5cfef9eeaa666567daed9ee8b13ec9a5205d2f3cfa87f6c83404c605be625634e5a6df361f24fd2012d36e271aedb9ac",
+    "transaction_status": "COMPLETED",
+    "transaction_response": "Successfully submitted to bridge",
+    "switch_response": "Under Processing: we can reprocess",
+    "acs_url": "https://acs/url",
+    "pa_rec": "",
+    "callbacks":["http://callbackurl"],
+    "callbacks_status": null,
+    "queued_callbacks": 1,
+    "completed_callbacks": 0,
+    "callback_status": 0,
+    "record_version": 140,
+    "need_syncing": true,
+    "synced": false,
+    "sent": true,
+    "incident_code": null,
+    "incident_description": null,
+    "incident_note": null,
+    "deleted_at": null,
+    "updated_at": null
+}
+```
+
+
+
+

@@ -1,0 +1,112 @@
+
+# Introduction
+
+Welcome to SwitchLink APIs!
+
+The API is organized around REST.
+
+Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, 
+and uses standard HTTP response codes and authentication.
+
+Authentication.
+APIs.
+Call backs.
+Errors.
+Please Note: Credentials, unique partner identifiers etc will be shared on email.
+
+
+# Getting started
+
+This document outlines how to integrate to Switchlink Money Transfer platform.
+
+There are two main api calls:
+
+- requests.
+
+- status.
+
+# Authentication
+
+Authorization is through basic auth(username:password) to validate the requests.
+
+Content-Type:application/json
+
+Authorization:Basic
+
+
+
+
+A hash is also computed using some mandatory request parameters and a key that is preshared on the registration process.
+
+Please contact support@switchlinkafrica.co.ke for more information.
+
+username & password to be provided on email.
+
+## Hashing Process on production
+
+### Process of hashing
+
+Step 1 : String that is being hashed is  "transaction_ref:partner_id:transaction_type:receiver_amount:transaction_date"  
+
+(concatenated by ":") 
+
+(e.g. "56791482233:PARTNERID:IPSL:2200:17112020")
+
+Step 2 :  Before hashing it is also being modified by Base64(encodeBase64)
+
+Step 3 :  Pass the validation Key shared by SLA. (for this example "aZZpAdzIWZvdypWDh2GvHpTJPuA=")
+
+finally,  pass the hash in the request as follows :
+
+<aside class="notice">
+  "hash":"076c6021809a94db3b6b60ce97d836eecd8d97f8",
+</aside>
+
+
+###Implementation in Java
+
+```java
+using BountyCastle's libraries (open source) like ByteUtils, Base64
+
+   import javax.crypto.Mac;
+
+   import javax.crypto.spec.SecretKeySpec;
+
+   import org.bouncycastle.pqc.math.linearalgebra.ByteUtils;
+
+   import org.bouncycastle.util.encoders.Base64;
+
+ 
+private static String calculateHmac(byte[] data, String key) throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+
+        SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(), "HmacSHA1");
+
+        Mac mac = Mac.getInstance("HmacSHA1");
+
+        mac.init(signingKey);
+
+        return ByteUtils.toHexString(mac.doFinal(data));
+    }
+
+
+calculateHMAC(Base64.encode("56791482233:UPESIMTS:IPSL:2200:17112020".getBytes()), "aZZpAdzIWZvdypWDh2GvHpTJPuA=")
+
+
+```
+
+
+<%= partial "./api/v1/request/req.html.md.erb"%>
+
+<%= partial "./api/v1/banks/banks.html.md.erb"%>
+
+<%= partial "./api/v1/reference/field_definition.html.md.erb"%>
+
+<%= partial "./api/v1/reference/error_def.html.md.erb"%>
+
+<%= partial "./api/v1/reference/trx_status_code.html.md.erb"%>
+
+<%= partial "./api/v1/reference/sla_status_code.html.md.erb"%>
+
+
+#[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/455ad46f2601baca6095)
+

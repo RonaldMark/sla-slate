@@ -1,0 +1,43 @@
+#Field definition
+
+|Field | Mandatory | Format | Description
+|------ | ------ | ------ | ------
+|partner_id | Y | an15 | Partner Identifier
+|transaction_ref | Y | an12 | Unique transaction reference from the partner
+|transaction_date | Y | n8 | Transaction date(DDMMYY)
+|collection_branch | Y | an8 | Y – If transaction_type mode is B O – If transaction_type Mode is M,C
+|transaction_type | Y | a1 | B – Bank Transfer M – Mobile Wallet C – Cash Payment U – Utility Bill Payments
+|sender_type | Y | an1 | P – Person B – Business
+|sender_full_name | Y | an100 | Sender full names
+|sender_address | Y | an50 | Sender Address
+|sender_city | Y | an15 | Sender City
+|sender_country_code | Y | a2 | Sender Country Code
+|sender_currency_code | Y | a3 | Sender Currency Code
+|sender_mobile | O | n15 | Sender Mobile
+|send_amount | Y | n12 | Sender Amount
+|sender_id_type | Y | an20 | Sender identification e.g. Passport,ID,Drivers Licence
+|sender_id_number | Y | an20 | Sender identification number
+|receiver_type | Y | an1 | P – Person B – Business
+|receiver_full_name | Y | an100 | Receiver full names
+|receiver_country_code | Y | a2 | Receiver Country Code
+|receiver_currency_code | Y | a3 | Receiver Currency Code
+|receiver_amount | Y | n12 | Receive Amount
+|receiver_city | Y | an15 | Sender City Name
+|receiver_address | Y | an50 | Receiver Address
+|receiver_mobile | Y,O | an15 | Receiver Mobile Number Y – If Payment mode is M O – If Payment Mode is B,C
+|mobile_operator | Y,O | an15 | Mobile operator e.g SAFARICOM Y – If Payment mode is M O – If Payment Mode is B,C
+|receiver_id_type | Y | an20 | Receiver identification e.g. Passport,ID,Drivers License
+|receiver_id_number | Y | an20 | Receiver identification number
+|receiver_account | Y,0 | n15 | Receiver account number Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_bank | Y,0 | an25 | Receiver bank name Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_bank_code | Y,0 | an20 | Receiver bank Code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_branch_code | Y,0 | an20 | Receiver branch Code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_swiftcode | Y,0 | an20 | Receiver bank swift code Y – If Payment mode is B O – If Payment Mode is M,C
+|receiver_branch | Y,0 | an8 | Receiver bank branch Y – If Payment mode is B O – If Payment Mode is M,C
+|exchange_rate | 0 | n12 | Exchange rate used for the transaction
+|commission_amount | 0 | n12 | Commission amount if applicable
+|remarks | O | an25 | Remarks
+|callbacks | Y,0 | an250 | List of call back urls. It can be more than one separated by comma
+|pan | Y,0 | n20 | PAN(Card Number) Y – If Payment mode is CARD
+|expiry_date | Y,0 | n4 | Card Expiry date Y – If Payment mode is CARD
+|card_security_code | Y,0 | n4 | CVV Code Y – If Payment mode is CARD

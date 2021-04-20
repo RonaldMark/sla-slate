@@ -1,0 +1,16 @@
+version: '3.7'
+
+networks:
+  slate-ui-networks:
+
+services:
+
+  slate-api:
+    image: langatronald/slate-api:uat01
+    container_name: slate-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /srv/slate
+    ports:
+      - 4567:4567
